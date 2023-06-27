@@ -1,28 +1,54 @@
 package org.yearup.data.mysql;
 
 import org.springframework.stereotype.Component;
+import org.yearup.models.Category;
+import org.yearup.models.Product;
 import org.yearup.models.Profile;
 import org.yearup.data.ProfileDao;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
 
 @Component
-public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
-{
-    public MySqlProfileDao(DataSource dataSource)
-    {
+public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao {
+    public MySqlProfileDao(DataSource dataSource) {
         super(dataSource);
     }
 
     @Override
-    public Profile create(Profile profile)
-    {
+    public List<Product> listByCategoryId(int categoryId) {
+        return null;
+    }
+
+    @Override
+    public Product add(Product product) {
+        return null;
+    }
+
+    @Override
+    public Product create(Product product) {
+        return null;
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        return null;
+    }
+
+    @Override
+    public Category create(Category category) {
+        return null;
+    }
+
+    @Override
+    public Profile create(Profile profile) {
         String sql = "INSERT INTO profiles (user_id, first_name, last_name, phone, email, address, city, state, zip) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try(Connection connection = getConnection())
-        {
+        try (Connection connection = getConnection()) {
             PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, profile.getUserId());
             ps.setString(2, profile.getFirstName());
@@ -37,11 +63,8 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             ps.executeUpdate();
 
             return profile;
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 }

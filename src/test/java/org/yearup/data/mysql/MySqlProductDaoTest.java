@@ -3,10 +3,12 @@ package org.yearup.data.mysql;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.yearup.models.Category;
 import org.yearup.models.Product;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,7 +19,17 @@ class MySqlProductDaoTest extends BaseDaoTestClass
     @BeforeEach
     public void setup()
     {
-        dao = new MySqlProductDao(dataSource);
+        dao = new MySqlProductDao(dataSource) {
+            @Override
+            public List<Category> getAllCategories() {
+                return null;
+            }
+
+            @Override
+            public Category create(Category category) {
+                return null;
+            }
+        };
     }
 
     @Test
