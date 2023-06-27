@@ -75,5 +75,16 @@ public class AuthenticationController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
-}
 
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<String> handleResponseStatusException(ResponseStatusException ex) {
+        HttpStatus status = ex.getStatus();
+        String errorMessage = ex.getMessage();
+        return ResponseEntity.status(status).body(errorMessage);
+    }
+
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public ResponseEntity<String> handleError() {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred.");
+    }
+}
