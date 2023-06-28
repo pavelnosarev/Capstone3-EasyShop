@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,7 +27,7 @@ import org.yearup.security.jwt.TokenProvider;
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin
-@PreAuthorize("permitAll")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AuthenticationController {
 
     private final TokenProvider tokenProvider;
@@ -50,14 +51,17 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, false);
 
-        User user = userDao.getByUserName(loginDto.getUsername());
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        try {
+            User user = userDao.getByUserName(loginDto.getUsername());
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return ResponseEntity.ok().headers(httpHeaders).body(new LoginResponseDto(jwt, user));
+            if (user == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+            return new ResponseEntity<>(new LoginResponseDto(jwt, user), httpHeaders, HttpStatus.OK);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
     }
 
     @PostMapping("/register")
@@ -83,8 +87,19 @@ public class AuthenticationController {
         return ResponseEntity.status(status).body(errorMessage);
     }
 
-    @RequestMapping(value = "/error", method = RequestMethod.GET)
-    public ResponseEntity<String> handleError() {
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred.");
-    }
 }
+
+//@Controller
+//class CustomErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
+//
+//    @RequestMapping("/error")
+//    public ResponseEntity<String> handleError() {
+//        // Handle the error and return an appropriate response
+//        // You can customize the error message or perform any other error handling logic here
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred.");
+//    }
+
+//    @Override
+//    public String getErrorPath() {
+//        return "/error";
+//    }

@@ -83,6 +83,11 @@ public class DatabaseConfig {
             public List<Product> getProductsByCategoryId(int categoryId) {
                 return null;
             }
+
+            @Override
+            public Product add(Product product) {
+                return null;
+            }
         };
     }
 
