@@ -7,6 +7,11 @@ import java.util.Map;
 public class ShoppingCart
 {
     private Map<Integer, ShoppingCartItem> items = new HashMap<>();
+    private int userId;
+    private int cartId;
+
+    public ShoppingCart(int cartId, int userId) {
+    }
 
     public Map<Integer, ShoppingCartItem> getItems()
     {
@@ -43,4 +48,19 @@ public class ShoppingCart
         return total;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
 }

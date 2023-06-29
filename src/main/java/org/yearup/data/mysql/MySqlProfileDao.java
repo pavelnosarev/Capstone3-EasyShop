@@ -19,31 +19,6 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao {
     }
 
     @Override
-    public List<Product> listByCategoryId(int categoryId) {
-        return null;
-    }
-
-    @Override
-    public Product add(Product product) {
-        return null;
-    }
-
-    @Override
-    public Product create(Product product) {
-        return null;
-    }
-
-    @Override
-    public List<Category> getAllCategories() {
-        return null;
-    }
-
-    @Override
-    public Category create(Category category) {
-        return null;
-    }
-
-    @Override
     public Profile create(Profile profile) {
         String sql = "INSERT INTO profiles (user_id, first_name, last_name, phone, email, address, city, state, zip) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";

@@ -22,31 +22,9 @@ public class MySqlUserDao extends MySqlDaoBase implements UserDao
         super(dataSource);
     }
 
-    @Override
-    public List<Product> listByCategoryId(int categoryId) {
-        return null;
-    }
 
-    @Override
-    public Product add(Product product) {
-        return null;
-    }
 
-    @Override
-    public Product create(Product product) {
-        return null;
-    }
 
-    @Override
-    public List<Category> getAllCategories() {
-        return null;
-    }
-
-    @Override
-    public Category create(Category category) {
-        // Implement the logic to create a category in the database
-        return null;
-    }
     @Override
     public User create(User newUser)
     {

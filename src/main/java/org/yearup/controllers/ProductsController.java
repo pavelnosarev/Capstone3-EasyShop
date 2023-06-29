@@ -25,7 +25,7 @@ public class ProductsController
     }
 
     @GetMapping("")
-    @PreAuthorize("permitAll()")
+//    @PreAuthorize("permitAll()")
     public List<Product> search(@RequestParam(name="cat", required = false) Integer categoryId,
                                 @RequestParam(name="minPrice", required = false) BigDecimal minPrice,
                                 @RequestParam(name="maxPrice", required = false) BigDecimal maxPrice,
@@ -43,7 +43,7 @@ public class ProductsController
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("permitAll()")
+//    @PreAuthorize("permitAll()")
     public Product getById(@PathVariable int id )
     {
         try
@@ -62,7 +62,7 @@ public class ProductsController
     }
 
     @PostMapping()
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Product addProduct(@RequestBody Product product)
     {
         try
@@ -76,7 +76,7 @@ public class ProductsController
     }
 
     @PutMapping("{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateProduct(@PathVariable int id, @RequestBody Product product)
     {
         try
@@ -90,7 +90,7 @@ public class ProductsController
     }
 
     @DeleteMapping("{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteProduct(@PathVariable int id)
     {
         try

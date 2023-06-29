@@ -27,7 +27,6 @@ import org.yearup.security.jwt.TokenProvider;
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AuthenticationController {
 
     private final TokenProvider tokenProvider;

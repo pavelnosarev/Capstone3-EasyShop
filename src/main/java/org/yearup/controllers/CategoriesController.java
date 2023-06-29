@@ -37,7 +37,7 @@ public class CategoriesController {
 
     @GetMapping
     public List<Category> getAll() {
-        return categoryDao.getAll();
+        return categoryDao.getAllCategories();
     }
 
     @GetMapping("/{id}")
@@ -45,16 +45,16 @@ public class CategoriesController {
         return categoryDao.getById(id);
     }
 
-    @GetMapping("/{categoryId}/products")
-    public List<Product> getProductsById(@PathVariable int categoryId) {
-        return productDao.getProductsByCategoryId(categoryId);
-    }
+//    @GetMapping("/{categoryId}/products")
+//    public List<Product> getProductsById(@PathVariable int categoryId) {
+//        return productDao.getProductsByCategoryId(categoryId);
+//    }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Category addCategory(@RequestBody Category category) {
-        return categoryDao.add(category);
+        return categoryDao.create(category);
     }
 
     @PutMapping("/{categoryId}/products")

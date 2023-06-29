@@ -22,15 +22,6 @@ public abstract class MySqlDaoBase
         return dataSource.getConnection();
     }
 
-    public abstract List<Product> listByCategoryId(int categoryId);
-
-    public abstract Product add(Product product);
-
-    public abstract Product create(Product product);
-
-    public abstract List<Category> getAllCategories();
-
-    public abstract Category create(Category category);
 
 
 }
