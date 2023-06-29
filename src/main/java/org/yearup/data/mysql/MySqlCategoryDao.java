@@ -1,6 +1,12 @@
 package org.yearup.data.mysql;
 
+import org.apache.ibatis.annotations.Delete;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.yearup.data.CategoryDao;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
@@ -11,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+
 public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     public MySqlCategoryDao(DataSource dataSource) {
         super(dataSource);
@@ -64,6 +71,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     }
 
     @Override
+    @PostMapping
     public Category create(Category category) {
         String sql = "INSERT INTO categories(description, name) VALUES(?, ?);";
         try(
@@ -96,6 +104,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     }
 
     @Override
+    @PutMapping
     public void update(int categoryId, Category category) {
         String sql = "Update categories SET description=?, name=? WHERE category_id=?;";
 
@@ -105,7 +114,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         ){
             preparedStatement.setString(1, category.getDescription());
             preparedStatement.setString(2, category.getName());
-            preparedStatement.setInt(3, category.getCategoryId());
+            preparedStatement.setInt(3, categoryId);
 
             preparedStatement.executeUpdate();
 
@@ -114,6 +123,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         }
     }
     @Override
+    @DeleteMapping
     public void delete(int categoryId) {
         String sql = "DELETE FROM categories WHERE category_id=?;";
 
