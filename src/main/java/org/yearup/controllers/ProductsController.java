@@ -81,13 +81,19 @@ public class ProductsController
     {
         try
         {
-            productDao.create(product);
+            var existingProduct = productDao.getById(id);
+
+            if(existingProduct == null)
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+            productDao.update(id, product);
         }
         catch(Exception ex)
         {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
+
 
     @DeleteMapping("{id}")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
