@@ -8,11 +8,18 @@ public class ShoppingCartItem {
     private Product product = null;
     private int quantity = 1;
     private BigDecimal discountPercent = BigDecimal.ZERO;
+    private BigDecimal price = BigDecimal.ZERO;
+
+    public ShoppingCartItem(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
+        this.price = product.getPrice();
+    }
 
     public ShoppingCartItem(Product product, int quantity, BigDecimal price) {
         this.product = product;
         this.quantity = quantity;
-        this.product.setPrice(price);
+        this.price = price;
     }
 
     public Product getProduct() {
@@ -45,7 +52,7 @@ public class ShoppingCartItem {
     }
 
     public BigDecimal getLineTotal() {
-        BigDecimal basePrice = product.getPrice();
+        BigDecimal basePrice = price;
         BigDecimal quantity = new BigDecimal(this.quantity);
 
         BigDecimal subTotal = basePrice.multiply(quantity);
@@ -55,7 +62,7 @@ public class ShoppingCartItem {
     }
 
     public BigDecimal getPrice() {
-        BigDecimal basePrice = product.getPrice();
+        BigDecimal basePrice = price;
         BigDecimal discountAmount = basePrice.multiply(discountPercent);
         BigDecimal totalPrice = basePrice.subtract(discountAmount);
 

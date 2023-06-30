@@ -13,6 +13,9 @@ public class ShoppingCart
     public ShoppingCart(int cartId, int userId) {
     }
 
+    public ShoppingCart(int userId) {
+    }
+
     public Map<Integer, ShoppingCartItem> getItems()
     {
         return items;
