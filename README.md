@@ -1,6 +1,9 @@
 # Easyshop - Capstone 3
 This repository contains a Java Spring Boot application with several controllers that handle various operations related to authentication, user profiles, categories, products, and the shopping cart.
 
+
+
+
 ### Overview
 The EasyShop application is a shopping platform that allows users to browse and purchase products. It provides features such as user authentication, managing user profiles, managing product categories, searching for products, and maintaining a shopping cart.
 
