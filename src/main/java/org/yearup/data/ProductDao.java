@@ -20,4 +20,6 @@ public interface ProductDao
     List<Product> getProductsByCategoryId(int categoryId);
 
     Product add(Product product);
+
+    Product getProductById(int productId);
 }

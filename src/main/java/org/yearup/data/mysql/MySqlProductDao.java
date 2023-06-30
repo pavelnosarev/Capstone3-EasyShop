@@ -1,10 +1,9 @@
 package org.yearup.data.mysql;
 
 import org.springframework.stereotype.Component;
-import org.yearup.models.Category;
 import org.yearup.models.Product;
 import org.yearup.data.ProductDao;
-//import org.yearup.data.Mysql
+
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -106,16 +105,34 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
 
                 if (generatedKeys.next()) {
                     // Retrieve the auto-incremented ID
-                    int orderId = generatedKeys.getInt(1);
+                    int productId = generatedKeys.getInt(1);
 
-                    // get the newly inserted category
-                    return getById(orderId);
+                    // Get the newly inserted product
+                    return getById(productId);
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
+        return null;
+    }
+
+    @Override
+    public Product getById(int productId) {
+        String sql = "SELECT * FROM products WHERE product_id = ?";
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, productId);
+
+            ResultSet row = statement.executeQuery();
+
+            if (row.next()) {
+                return mapRow(row);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -144,24 +161,6 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
     }
 
     @Override
-    public Product getById(int productId) {
-        String sql = "SELECT * FROM products WHERE product_id = ?";
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, productId);
-
-            ResultSet row = statement.executeQuery();
-
-            if (row.next()) {
-                return mapRow(row);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-
-    @Override
     public Product create(Product product) {
         String sql = "INSERT INTO products(name, price, category_id, description, color, image_url, stock, featured) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -185,15 +184,16 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
 
                 if (generatedKeys.next()) {
                     // Retrieve the auto-incremented ID
-                    int orderId = generatedKeys.getInt(1);
+                    int productId = generatedKeys.getInt(1);
 
-                    // get the newly inserted category
-                    return getById(orderId);
+                    // Get the newly inserted product
+                    return getById(productId);
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return null;
     }
 
@@ -266,6 +266,25 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
 
         return products;
     }
+
+    @Override
+    public Product getProductById(int productId) {
+        String sql = "SELECT * FROM products WHERE product_id = ?";
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, productId);
+
+            ResultSet row = statement.executeQuery();
+
+            if (row.next()) {
+                return mapRow(row);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
 
     protected static Product mapRow(ResultSet row) throws SQLException {
         int productId = row.getInt("product_id");

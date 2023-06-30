@@ -27,7 +27,7 @@ public class ShoppingCartController {
         this.productDao = productDao;
     }
 
-    @GetMapping
+    @GetMapping("{id}")
     public ShoppingCart getCart(Authentication authentication) {
         try {
             String userName = authentication.getName();

@@ -71,7 +71,6 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     }
 
     @Override
-    @PostMapping
     public Category create(Category category) {
         String sql = "INSERT INTO categories(description, name) VALUES(?, ?);";
         try(
@@ -104,7 +103,6 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     }
 
     @Override
-    @PutMapping
     public void update(int categoryId, Category category) {
         String sql = "Update categories SET description=?, name=? WHERE category_id=?;";
 
