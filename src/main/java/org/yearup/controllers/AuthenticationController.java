@@ -94,17 +94,3 @@ public class AuthenticationController {
 
 }
 
-//@Controller
-//class CustomErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
-//
-//    @RequestMapping("/error")
-//    public ResponseEntity<String> handleError() {
-//        // Handle the error and return an appropriate response
-//        // You can customize the error message or perform any other error handling logic here
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred.");
-//    }
-
-//    @Override
-//    public String getErrorPath() {
-//        return "/error";
-//    }
